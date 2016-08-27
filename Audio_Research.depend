@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1472282241 source:c:\users\ajgel_000\desktop\software\research\audio_research\main.c
+	<stdio.h>
+	<stdint.h>
+	<string.h>
+	<math.h>
+
+1472276540 c:\users\ajgel_000\desktop\software\research\audio_research\util.h
+
