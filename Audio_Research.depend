@@ -7,17 +7,26 @@
 
 1472276540 c:\users\ajgel_000\desktop\software\research\audio_research\util.h
 
-1472429391 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
+1472433189 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
 	<stdio.h>
 	<stdint.h>
 	<string.h>
 	<math.h>
+	"synthesizer.h"
 	"wavFormat.h"
 
-1472429342 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.h
+1472429756 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.h
 	<stdbool.h>
 
-1472429548 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
+1472429756 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
 	"wavFormat.h"
 	<stdio.h>
+
+1472432093 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
+	"synthesizer.h"
+	"wavFormat.h"
+	<math.h>
+
+1472432114 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.h
+	"wavFormat.h"
 
