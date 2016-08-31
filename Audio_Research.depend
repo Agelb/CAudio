@@ -7,7 +7,7 @@
 
 1472276540 c:\users\ajgel_000\desktop\software\research\audio_research\util.h
 
-1472624163 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
+1472628302 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
 	<stdio.h>
 	<stdint.h>
 	<string.h>
@@ -25,7 +25,7 @@
 	"wavFormat.h"
 	<stdio.h>
 
-1472624148 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
+1472628088 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
 	"synthesizer.h"
 	"wavFormat.h"
 	<math.h>
