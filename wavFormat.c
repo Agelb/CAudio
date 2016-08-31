@@ -79,7 +79,7 @@ void WriteFile(wavFile* wFile) {
     // TODO: writing multiple data chunks
     for(frame_index = 0; frame_index < total_frames - 1; frame_index++) {
         if(wFile->fChunk.dwBitsPerSample == 16) {
-            //fwrite(wFile->dChunk.frames[frame_index].sSamples, bytes_per_frame, 1, file_stream);
+            fwrite(&wFile->dChunk.frames[frame_index].samples[0], sizeof(sample), 1, file_stream);
         }
     }
     fwrite(wFile->dChunk.frames, 1, wFile->dChunk.header.dwChunkSize, file_stream);
