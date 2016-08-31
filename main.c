@@ -31,12 +31,13 @@ int main(int argc, char *argv[])
     }
 
     if(FILENAME == 0)
-        FILENAME = "frame_test.WAV";
+        FILENAME = "frame_test_2channel.WAV";
 
     wavFile wFile;
     InitializeWaveFile(&wFile);
     SetFilename(FILENAME, &wFile);
     SetBitRate(44100, &wFile);
+    SetChannelCount(2, &wFile);
 
     AllocateFrames(&wFile.dChunk.frames, (long)seconds * wFile.fChunk.dwSamplesPerSec, wFile.fChunk.dwBitsPerSample, wFile.fChunk.wChannels);
     long frame_index;
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
     //sample testSample;
     //testSample.value = 9090;
     //WriteToFrame(&testSample,&wFile.dChunk.frames[0],1,16);
-    Generate16SineWave(wFile.dChunk.frames, 441.5, seconds, &wFile.fChunk);
+    mGenerate16SineWave(wFile.dChunk.frames, 441.5, seconds, 2, &wFile.fChunk);
     wFile.dChunk.header.dwChunkSize = seconds * wFile.fChunk.dwAvgBytesPerSec;
 
     wFile.rHeader.dwFileLength = GetFileSize(&wFile);

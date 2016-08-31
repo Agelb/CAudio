@@ -7,7 +7,7 @@
 
 1472276540 c:\users\ajgel_000\desktop\software\research\audio_research\util.h
 
-1472612599 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
+1472624163 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
 	<stdio.h>
 	<stdint.h>
 	<string.h>
@@ -16,30 +16,30 @@
 	"wavFormat.h"
 	"frame.h"
 
-1472611018 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.h
+1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.h
 	<stdbool.h>
 	"audioParam.h"
 	"frame.h"
 
-1472613505 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
+1472623995 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
 	"wavFormat.h"
 	<stdio.h>
 
-1472612878 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
+1472624148 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
 	"synthesizer.h"
 	"wavFormat.h"
 	<math.h>
 
-1472447391 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.h
+1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.h
 	"wavFormat.h"
 
-1472603333 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.h
+1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.h
 
-1472603317 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.c
+1472613619 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.c
 	"audioParam.h"
 
-1472612544 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.c
+1472623949 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.c
 	"frame.h"
 
-1472610931 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.h
+1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.h
 

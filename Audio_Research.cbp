@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="audioParam.h" />
+		<Unit filename="frame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="frame.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -71,6 +71,7 @@ void WriteFile(wavFile* wFile) {
     int frame_index;
     unsigned int bytes_per_frame = (wFile->fChunk.dwBitsPerSample / 8) * wFile->fChunk.wChannels;
     unsigned long total_frames = wFile->dChunk.header.dwChunkSize / bytes_per_frame;
+    unsigned int channel_index;
     FILE *file_stream = fopen(wFile->filename, "wb+"); // Make sure this is opened in binary mode
     // TODO: platform independent file writing
     fwrite(&wFile->rHeader, 1, sizeof(wFile->rHeader), file_stream);
@@ -79,10 +80,12 @@ void WriteFile(wavFile* wFile) {
     // TODO: writing multiple data chunks
     for(frame_index = 0; frame_index < total_frames - 1; frame_index++) {
         if(wFile->fChunk.dwBitsPerSample == 16) {
-            fwrite(&wFile->dChunk.frames[frame_index].samples[0], sizeof(sample), 1, file_stream);
+            for(channel_index = 0; channel_index < wFile->fChunk.wChannels; channel_index++){
+                fwrite(&wFile->dChunk.frames[frame_index].samples[channel_index], sizeof(sample), 1, file_stream);
+            }
         }
     }
-    fwrite(wFile->dChunk.frames, 1, wFile->dChunk.header.dwChunkSize, file_stream);
+    //fwrite(wFile->dChunk.frames, 1, wFile->dChunk.header.dwChunkSize, file_stream);
     fclose(file_stream);
 }
 
@@ -91,7 +94,6 @@ void Dispose(wavFile* wFile) {
     unsigned int bytes_per_frame = (wFile->fChunk.dwBitsPerSample / 8) * wFile->fChunk.wChannels;
     unsigned long total_frames = wFile->dChunk.header.dwChunkSize / bytes_per_frame;
     for(frame_index = 0; frame_index < total_frames; frame_index++) {
-        printf("frame index %d", frame_index);
         //DisposeFrame(&wFile->dChunk.frames[frame_index]);
   //      free(wFile->dChunk.frames[frame_index].sSamples);
     //    free(wFile->dChunk.frames[frame_index].tSamples);
