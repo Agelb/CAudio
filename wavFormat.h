@@ -1,6 +1,8 @@
 #ifndef WAVFORMAT_H_INCLUDED
 #define WAVFORMAT_H_INCLUDED
 #include <stdbool.h>
+#include "audioParam.h"
+#include "frame.h"
 
 typedef struct
 {
@@ -31,7 +33,7 @@ typedef struct
 {
     chunk_header header;
     //uint8_t* byteArray; // for 8 bit sound
-    short* shortArray; // for 16 bit sound
+    frame* frames; // for 16 bit sound
 } data_chunk;
 
 

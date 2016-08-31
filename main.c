@@ -4,12 +4,13 @@
 #include <math.h>
 #include "synthesizer.h"
 #include "wavFormat.h"
+#include "frame.h"
 
 int main(int argc, char *argv[])
 {
     char* FILENAME = 0;
     const unsigned short MAX_FILENAME_SIZE;
-    float seconds = 1.2;
+    float seconds = 2;
     int i;
     for(i=0; i < argc; ++i){
         if(strcmp("-f", argv[i]) == 0) {
@@ -30,22 +31,30 @@ int main(int argc, char *argv[])
     }
 
     if(FILENAME == 0)
-        FILENAME = "default.WAV";
+        FILENAME = "frame_test.WAV";
 
     wavFile wFile;
     InitializeWaveFile(&wFile);
     SetFilename(FILENAME, &wFile);
-    SetBitRate(41000, &wFile);
+    SetBitRate(44100, &wFile);
 
-    // TODO: refactor samples/frames
-    wFile.dChunk.shortArray = (short*)malloc((seconds * wFile.fChunk.dwSamplesPerSec) * sizeof(short));
-    memset(wFile.dChunk.shortArray, '0', seconds * wFile.fChunk.dwSamplesPerSec * sizeof(short));
-    GenerateSineWave(wFile.dChunk.shortArray, 441.5, seconds, &wFile.fChunk);
+    AllocateFrames(&wFile.dChunk.frames, (long)seconds * wFile.fChunk.dwSamplesPerSec, wFile.fChunk.dwBitsPerSample, wFile.fChunk.wChannels);
+    long frame_index;
+    for(frame_index = 0; frame_index < (long)seconds * wFile.fChunk.dwSamplesPerSec; frame_index++) {
+        AllocateFrame(&wFile.dChunk.frames[frame_index],16, 1);
+    }
+    //AllocateFrame(&wFile.dChunk.frames[0],16, 1);
+    //memset(wFile.dChunk.shortArray, '0', seconds * wFile.fChunk.dwSamplesPerSec * sizeof(short));
+    //sample testSample;
+    //testSample.value = 9090;
+    //WriteToFrame(&testSample,&wFile.dChunk.frames[0],1,16);
+    Generate16SineWave(wFile.dChunk.frames, 441.5, seconds, &wFile.fChunk);
     wFile.dChunk.header.dwChunkSize = seconds * wFile.fChunk.dwAvgBytesPerSec;
 
     wFile.rHeader.dwFileLength = GetFileSize(&wFile);
     WriteFile(&wFile);
     Dispose(&wFile);
     free(FILENAME);
+
     return 0;
 }

@@ -31,9 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="audioParam.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="audioParam.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="synthesizer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="synthesizer.h" />
+		<Unit filename="wavFormat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wavFormat.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
