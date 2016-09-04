@@ -36,6 +36,28 @@ void GenerateSineWave_Mono_16a(frame* dest, const double frequency, const double
     }
 }
 
+void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double duration, const unsigned short amplitude, const format_chunk* format) {
+    //frequency cycles per second
+    short max_amplitude = 32760/2;
+    double step_size = ((float)max_amplitude*2 / format->dwSamplesPerSec) * frequency;
+    //float angle = (M_PI * 2 * frequency) / (format->dwSamplesPerSec * format->wChannels);
+    //unsigned long total_frames = duration * format->dwSamplesPerSec;
+    unsigned long total_frames = duration * format->dwSamplesPerSec;
+    unsigned long index;
+    sample iterated_sample;
+    for(index = 0; index < total_frames; index++)
+    {
+        if(index == 48) {
+                printf("pause");
+        }
+        //iterated_sample.value = ((short)(index * step_size) % max_amplitude) - max_amplitude;
+        iterated_sample.value = ((index * (short)step_size) % (max_amplitude*2)) - max_amplitude;
+        WriteToFrame(&iterated_sample,&dest[index],1,format->dwBitsPerSample);
+    }
+}
+
+
+
 void mGenerate16SineWave(frame* dest, const double frequency, const double duration, const int num_channels, const format_chunk* format) {
     // TODO: variable amplitudes
     // TODO: amplitude based on bit depth

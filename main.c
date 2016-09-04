@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     }
 
     if(FILENAME == 0)
-        FILENAME = "frame_test_2channel.WAV";
+        FILENAME = "sawb.WAV";
 
     wavFile wFile;
     InitializeWaveFile(&wFile);
@@ -50,8 +50,8 @@ int main(int argc, char *argv[])
     }
 
     short max_amplitude = 32600;
-    GenerateSineWave_Mono_16a(signal_a, 440.0, seconds, max_amplitude/7, &wFile.fChunk);
-    GenerateSineWave_Mono_16a(signal_b, 523.25, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 440.0, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_b, 523.25, seconds, max_amplitude/7, &wFile.fChunk);
 
 
     AllocateFrames(&wFile.dChunk.frames, (long)seconds * wFile.fChunk.dwSamplesPerSec, wFile.fChunk.dwBitsPerSample, wFile.fChunk.wChannels);
@@ -60,27 +60,28 @@ int main(int argc, char *argv[])
         AllocateFrame(&wFile.dChunk.frames[frame_index],16, 1);
     }
 
+    //GenerateSawWave_Mono_16a(wFile.dChunk.frames, 440.0, seconds, max_amplitude/7, &wFile.fChunk);
 
     Add_Waves_Mono_16(wFile.dChunk.frames,signal_a, signal_b, 44100 * (long)seconds);
     Copy_Frames(signal_b, wFile.dChunk.frames, 44100 * (long)seconds);
 
-    GenerateSineWave_Mono_16a(signal_a, 659.25, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 659.25, seconds, max_amplitude/7, &wFile.fChunk);
     Add_Waves_Mono_16(wFile.dChunk.frames, signal_a, signal_b, 44100 * (long)seconds);
 
     Copy_Frames(signal_b, wFile.dChunk.frames, 44100 * (long)seconds);
-    GenerateSineWave_Mono_16a(signal_a, 174.61, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 174.61, seconds, max_amplitude/7, &wFile.fChunk);
     Add_Waves_Mono_16(wFile.dChunk.frames, signal_a, signal_b, 44100 * (long)seconds);
 
     Copy_Frames(signal_b, wFile.dChunk.frames, 44100 * (long)seconds);
-    GenerateSineWave_Mono_16a(signal_a, 392.00, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 392.00, seconds, max_amplitude/7, &wFile.fChunk);
     Add_Waves_Mono_16(wFile.dChunk.frames, signal_a, signal_b, 44100 * (long)seconds);
 
     Copy_Frames(signal_b, wFile.dChunk.frames, 44100 * (long)seconds);
-    GenerateSineWave_Mono_16a(signal_a, 1318.51, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 1318.51, seconds, max_amplitude/7, &wFile.fChunk);
     Add_Waves_Mono_16(wFile.dChunk.frames, signal_a, signal_b, 44100 * (long)seconds);
 
     Copy_Frames(signal_b, wFile.dChunk.frames, 44100 * (long)seconds);
-    GenerateSineWave_Mono_16a(signal_a, 43.65, seconds, max_amplitude/7, &wFile.fChunk);
+    GenerateSawWave_Mono_16a(signal_a, 43.65, seconds, max_amplitude/7, &wFile.fChunk);
     Add_Waves_Mono_16(wFile.dChunk.frames, signal_a, signal_b, 44100 * (long)seconds);
 
     wFile.dChunk.header.dwChunkSize = seconds * wFile.fChunk.dwAvgBytesPerSec;
