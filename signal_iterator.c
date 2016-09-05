@@ -35,16 +35,19 @@ void GenerateSignalB(frame* dest, const unsigned long num_frames, void* generato
     }
 }
 
-void unary_operate(frame* dest, const unsigned long size, UnaryMethod oper) {
-    unsigned int num_blocks = ceil(size / BLOCK_SIZE);
+void PerformUnaryFunction(frame* dest, const frame* signal, const unsigned long num_frames, UnaryFunction func) {
+    unsigned int num_blocks = ceil(num_frames / BLOCK_SIZE);
     unsigned long block_index;
+    unsigned long next_block_size = BLOCK_SIZE;
     unsigned long remaining_frames;
-    for(block_index = 0; block_index < num_blocks; block_index++) {
-        remaining_frames = size - (block_index * BLOCK_SIZE);
+    unsigned long input;
+    func(&dest[1], &signal[1], BLOCK_SIZE - 1, &signal[0]);
+    for(block_index = 1; block_index < num_blocks+1; block_index++) {
+        remaining_frames = num_frames - (block_index * BLOCK_SIZE);
         if(remaining_frames < BLOCK_SIZE) {
-            oper(dest, remaining_frames, block_index);
+            next_block_size = remaining_frames;
         }
-        oper(dest, BLOCK_SIZE, block_index);
+        func(&dest[block_index * BLOCK_SIZE], &signal[block_index * BLOCK_SIZE], next_block_size, &signal[(block_index * BLOCK_SIZE) - 1]);
     }
 }
 

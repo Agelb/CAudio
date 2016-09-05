@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="audioParam.h" />
+		<Unit filename="filter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="filter.h" />
 		<Unit filename="frame.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -42,6 +46,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="signal_iterator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="signal_iterator.h" />
 		<Unit filename="synthesizer.c">
 			<Option compilerVar="CC" />
 		</Unit>

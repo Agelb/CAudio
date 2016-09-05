@@ -5,7 +5,7 @@
 
 static const unsigned int BLOCK_SIZE = 10000;
 
-typedef void (*UnaryMethod)(frame*, const unsigned long, const unsigned long);
+typedef void (*UnaryFunction)(frame*, const frame*, const unsigned long, const frame*);
 typedef void (*GeneratorMethod)(frame*, const double, const double, const unsigned short, const unsigned long, const format_chunk*);
 typedef void (*GeneratorMethodB)(frame*, void*, const unsigned long);
 typedef void (*BinaryFunction)(frame*, frame*, frame*, const unsigned long);

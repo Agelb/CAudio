@@ -6,6 +6,7 @@
 #include "wavFormat.h"
 #include "frame.h"
 #include "signal_iterator.h"
+#include "filter.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
     }
 
     if(FILENAME == 0)
-        FILENAME = "addition.WAV";
+        FILENAME = "lowpass.WAV";
 
     wavFile wFile;
     InitializeWaveFile(&wFile);
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
     AllocateFrames(&signal_a, (long)seconds * 44100, 16, 1);
     AllocateFrames(&signal_b, (long)seconds * 44100, 16, 1);
     GeneratorMethod sine_method;
-
+    UnaryFunction lp_function = &lowpass;
     GeneratorMethodB wave_function = &SawWave;
     GeneratorMethodB sine_function = &SineWave;
 
@@ -65,19 +66,21 @@ int main(int argc, char *argv[])
     SawParameters params;
     params.bitrate = wFile.fChunk.dwSamplesPerSec;
     params.channel = 1;
-    params.frequency = 50;
+    params.frequency = 200;
     params.max_amplitude = MAX_AMPLITUDE_16 - 5000;
     params.range = (MAX_AMPLITUDE_16-5000) * 2;
 
     SineParameters sparams;
     SetSineParameters(&sparams, MAX_AMPLITUDE_16 - 5000, wFile.fChunk.dwSamplesPerSec, 200, 1);
 
-    GenerateSignalB(signal_a, (seconds * wFile.fChunk.dwSamplesPerSec), &params, wave_function);
+    GenerateSignalB(signal_a, (long)(seconds * wFile.fChunk.dwSamplesPerSec), &params, wave_function);
 
     SetSineParameters(&sparams, MAX_AMPLITUDE_16 - 5000, wFile.fChunk.dwSamplesPerSec, 480, 1);
-    GenerateSignalB(signal_b, (seconds * wFile.fChunk.dwSamplesPerSec), &sparams, sine_function);
+    GenerateSignalB(signal_b, (long)(seconds * wFile.fChunk.dwSamplesPerSec), &sparams, sine_function);
 
-    PerformBinaryFunction(wFile.dChunk.frames, signal_a, signal_b, (seconds * wFile.fChunk.dwSamplesPerSec), &AddSignalsMono);
+    PerformBinaryFunction(wFile.dChunk.frames, signal_a, signal_b, (long)(seconds * wFile.fChunk.dwSamplesPerSec), &AddSignalsMono);
+    Copy_Frames(signal_b, wFile.dChunk.frames, (long)(seconds * wFile.fChunk.dwSamplesPerSec));
+    PerformUnaryFunction(wFile.dChunk.frames, signal_b, (long)(seconds * wFile.fChunk.dwSamplesPerSec), lp_function);
     //GenerateSawWave_Mono_16a(wFile.dChunk.frames, 440.0, seconds, max_amplitude/7, &wFile.fChunk);
     /*
     Add_Waves_Mono_16(wFile.dChunk.frames,signal_a, signal_b, 44100 * (long)seconds);
