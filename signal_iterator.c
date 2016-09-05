@@ -20,6 +20,21 @@ void GenerateSignal(frame* dest, const double frequency, const double duration, 
 
 }
 
+void GenerateSignalB(frame* dest, const unsigned long num_frames, void* generator_param, GeneratorMethodB generator) {
+    unsigned int num_blocks = ceil(num_frames / BLOCK_SIZE);
+    unsigned long block_index;
+    unsigned long frame_index;
+    unsigned long remaining_frames;
+    unsigned long input;
+    for(block_index = 0; block_index < num_blocks+1; block_index++) {
+        remaining_frames = num_frames - (block_index * BLOCK_SIZE);
+        for(frame_index = 0; frame_index < BLOCK_SIZE && frame_index < remaining_frames; frame_index++) {
+            input = frame_index + (block_index * BLOCK_SIZE);
+            generator(&dest[frame_index + (block_index * BLOCK_SIZE)], generator_param, &input);
+        }
+    }
+}
+
 void unary_operate(frame* dest, const unsigned long size, UnaryMethod oper) {
     unsigned int num_blocks = ceil(size / BLOCK_SIZE);
     unsigned long block_index;
@@ -33,8 +48,3 @@ void unary_operate(frame* dest, const unsigned long size, UnaryMethod oper) {
     }
 }
 
-void operate(frame* dest, const frame* src_a, const frame* src_b, const unsigned long size) {
-
-
-
-}

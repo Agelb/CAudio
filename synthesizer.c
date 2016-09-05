@@ -53,7 +53,7 @@ void GenerateSineWave_Mono_16ah(frame* dest, const double frequency, const doubl
     }
 }
 
-void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double duration, const unsigned short amplitude, const format_chunk* format) {
+/*void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double duration, const unsigned short amplitude, const unsigned long block_num, const format_chunk* format) {
     //frequency cycles per second
     short max_amplitude = 32760/8;
     double step_size = ((float)max_amplitude*2 / format->dwSamplesPerSec) * frequency;
@@ -68,8 +68,13 @@ void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double 
         iterated_sample.value = ((index * (short)step_size) % (max_amplitude*2)) - max_amplitude;
         WriteToFrame(&iterated_sample,&dest[index],1,format->dwBitsPerSample);
     }
-}
+}*/
 
+void SawWave(frame* dest, const void* saw, const unsigned long *input) {
+    SawParameters* params = (SawParameters*)saw;
+    double result = ((*input * ((int)((params->range)/params->bitrate) * params->frequency)) % params->range) - params->max_amplitude;
+    dest->samples[params->channel].value = result;
+}
 
 
 void mGenerate16SineWave(frame* dest, const double frequency, const double duration, const int num_channels, const format_chunk* format) {

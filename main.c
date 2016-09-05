@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
     AllocateFrames(&signal_a, (long)seconds * 44100, 16, 1);
     AllocateFrames(&signal_b, (long)seconds * 44100, 16, 1);
     GeneratorMethod sine_method;
-    sine_method = &GenerateSineWave_Mono_16ah;
-
+    //sine_method = &GenerateSineWave_Mono_16ah;
+    GeneratorMethodB wave_function = &SawWave;
     // = &GenerateSineWave_Mono_16a;
     //void (*sineFunction)(frame*, const double, const double, const unsigned short, const format_chunk*);
     //sineFunction
@@ -68,7 +68,14 @@ int main(int argc, char *argv[])
     for(frame_index = 0; frame_index < (long)seconds * wFile.fChunk.dwSamplesPerSec; frame_index++) {
         AllocateFrame(&wFile.dChunk.frames[frame_index],16, 1);
     }
-    GenerateSignal(wFile.dChunk.frames, 440.0, seconds, max_amplitude/7, &wFile.fChunk, sine_method);
+    SawParameters params;
+    params.bitrate = wFile.fChunk.dwSamplesPerSec;
+    params.channel = 0;
+    params.frequency = 440;
+    params.max_amplitude = MAX_AMPLITUDE_16 - 5000;
+    params.range = (MAX_AMPLITUDE_16-5000) * 2;
+    //GenerateSignal(wFile.dChunk.frames, 440.0, seconds, max_amplitude/7, &wFile.fChunk, sine_method);
+    GenerateSignalB(wFile.dChunk.frames, (seconds * wFile.fChunk.dwSamplesPerSec), &params, wave_function);
     //GenerateSawWave_Mono_16a(wFile.dChunk.frames, 440.0, seconds, max_amplitude/7, &wFile.fChunk);
     /*
     Add_Waves_Mono_16(wFile.dChunk.frames,signal_a, signal_b, 44100 * (long)seconds);
