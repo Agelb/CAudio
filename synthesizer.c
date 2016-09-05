@@ -8,6 +8,16 @@
 */
 
 // TODO: decouple this from the wave format
+
+void SetSineParameters(SineParameters* paramters, double amplitude, unsigned int bitrate, unsigned int frequency, unsigned int channel) {
+    paramters->max_amplitude = amplitude;
+    paramters->bitrate = bitrate;
+    paramters->frequency = frequency;
+    paramters->channel = channel - 1;
+    paramters->angle = (M_PI * 2 * frequency) / bitrate;
+}
+
+
 void GenerateSineWave_Mono_16(frame* dest, const double frequency, const double duration, const format_chunk* format) {
     // TODO: variable amplitudes
     // TODO: amplitude based on bit depth
@@ -73,9 +83,20 @@ void GenerateSineWave_Mono_16ah(frame* dest, const double frequency, const doubl
 void SawWave(frame* dest, const void* saw, const unsigned long *input) {
     SawParameters* params = (SawParameters*)saw;
     double result = ((*input * ((int)((params->range)/params->bitrate) * params->frequency)) % params->range) - params->max_amplitude;
-    dest->samples[params->channel].value = result;
+    dest->samples[params->channel-1].value = result;
 }
 
+void SineWave(frame* dest, const void* generic_param, const unsigned long *input) {
+    SineParameters* params = (SineParameters*)generic_param;
+    dest->samples[params->channel].value = params->max_amplitude * sin(params->angle*(*input));
+}
+
+void AddSignalsMono(frame* dest, const frame* signal_a, const frame* signal_b, const unsigned long num_frames) {
+    unsigned long frame_index;
+    for(frame_index = 0; frame_index < num_frames; frame_index++) {
+        dest[frame_index].samples[0].value = signal_a[frame_index].samples[0].value + signal_b[frame_index].samples[0].value;
+    }
+}
 
 void mGenerate16SineWave(frame* dest, const double frequency, const double duration, const int num_channels, const format_chunk* format) {
     // TODO: variable amplitudes
@@ -95,7 +116,7 @@ void mGenerate16SineWave(frame* dest, const double frequency, const double durat
         //WriteToFrame(&iterated_sample,&dest[index],2,format->dwBitsPerSample);
     }
 }
-
+/*
 void Add_Waves_Mono_16(frame* dest, const frame* signal_a, const frame* signal_b, const unsigned long num_samples) {
     unsigned long frame_index = 0;
     long overflow_detection;
@@ -111,7 +132,7 @@ void Add_Waves_Mono_16(frame* dest, const frame* signal_a, const frame* signal_b
         WriteToFrame(&iterated_sample, &dest[frame_index],1,16);
     }
 }
-
+*/
 //TODO: multi-channel frame copy
 void Copy_Frames(frame* dest, const frame* src, const unsigned long num_frames) {
     unsigned long frame_index;

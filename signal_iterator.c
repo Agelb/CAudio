@@ -48,3 +48,17 @@ void unary_operate(frame* dest, const unsigned long size, UnaryMethod oper) {
     }
 }
 
+void PerformBinaryFunction(frame* dest, const frame* signal_a, const frame* signal_b, const unsigned long num_frames, BinaryFunction func) {
+    unsigned int num_blocks = ceil(num_frames / BLOCK_SIZE);
+    unsigned long block_index;
+    unsigned long next_block_size = BLOCK_SIZE;
+    unsigned long remaining_frames;
+    unsigned long input;
+    for(block_index = 0; block_index < num_blocks+1; block_index++) {
+        remaining_frames = num_frames - (block_index * BLOCK_SIZE);
+        if(remaining_frames < BLOCK_SIZE) {
+            next_block_size = remaining_frames;
+        }
+        func(&dest[block_index * BLOCK_SIZE], &signal_a[block_index * BLOCK_SIZE], &signal_b[block_index * BLOCK_SIZE], next_block_size);
+    }
+}
