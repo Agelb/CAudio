@@ -2,7 +2,7 @@
 #define FRAME_H_INCLUDED
 
 typedef struct {
-    short value; //16-bit sample
+    double value; //16-bit sample
 } sample;
 
 
@@ -12,6 +12,7 @@ typedef struct {
 
 
 //frame* AllocateFrames(unsigned long num_frames, unsigned int bit_depth, unsigned int num_channels);
+void AllocateFrames(frame** frames, unsigned long num_frames, unsigned int bit_depth, unsigned int num_channels);
 void WriteToFrame(const sample* samp, frame* frm, unsigned int channel, unsigned int depth);
 sample* GetSample(const frame* frm, unsigned int channel, unsigned int depth);
 void DisposeFrame(frame* frm);

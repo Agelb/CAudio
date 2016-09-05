@@ -7,7 +7,7 @@
 
 1472276540 c:\users\ajgel_000\desktop\software\research\audio_research\util.h
 
-1473031556 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
+1473045277 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\main.c
 	<stdio.h>
 	<stdint.h>
 	<string.h>
@@ -15,31 +15,49 @@
 	"synthesizer.h"
 	"wavFormat.h"
 	"frame.h"
+	"signal_iterator.h"
 
 1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.h
 	<stdbool.h>
 	"audioParam.h"
 	"frame.h"
 
-1472623995 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
+1473045222 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\wavformat.c
 	"wavFormat.h"
 	<stdio.h>
 
-1473031344 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
+1473044729 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.c
 	"synthesizer.h"
 	"wavFormat.h"
 	<math.h>
+	"signal_iterator.h"
 
-1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.h
+1473043431 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\synthesizer.h
 	"wavFormat.h"
 
-1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.h
+1473045301 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.h
 
-1472613619 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.c
+1473045285 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\audioparam.c
 	"audioParam.h"
 
-1472623949 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.c
+1473044590 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.c
 	"frame.h"
 
-1472613619 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.h
+1473039709 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\frame.h
+
+1473039704 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\filter.c
+	"filter.h"
+	"frame.h"
+
+1473037968 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\filter.h
+
+1473044950 source:c:\users\ajgel_000\desktop\software\research\audio_research\caudio\signal_iterator.c
+	<math.h>
+	"signal_iterator.h"
+	"frame.h"
+	"audioParam.h"
+
+1473045002 c:\users\ajgel_000\desktop\software\research\audio_research\caudio\signal_iterator.h
+	"frame.h"
+	"wavFormat.h"
 

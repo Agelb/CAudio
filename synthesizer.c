@@ -1,11 +1,12 @@
 #include "synthesizer.h"
 #include "wavFormat.h"
 #include <math.h>
-
+#include "signal_iterator.h"
 /*
     Writes 16-bit samples to the passed destination.
     params: destination, frequency in Hz, duration in seconds, format_chunk from wave file
 */
+
 // TODO: decouple this from the wave format
 void GenerateSineWave_Mono_16(frame* dest, const double frequency, const double duration, const format_chunk* format) {
     // TODO: variable amplitudes
@@ -13,6 +14,8 @@ void GenerateSineWave_Mono_16(frame* dest, const double frequency, const double 
     //short amplitude = 327603/8; // Max amplitude for 16 bit sound
     short amplitude = 5800;
     float angle = (M_PI * 2 * frequency) / (format->dwSamplesPerSec * format->wChannels);
+    double seconds_per_sample = format->dwSamplesPerSec / frequency;
+    unsigned long samples_per_cycle = seconds_per_sample * angle;
     unsigned long total_frames = duration * format->dwSamplesPerSec;
     unsigned long index;
     sample iterated_sample;
@@ -36,9 +39,23 @@ void GenerateSineWave_Mono_16a(frame* dest, const double frequency, const double
     }
 }
 
+void GenerateSineWave_Mono_16ah(frame* dest, const double frequency, const double duration, const unsigned short amplitude, const unsigned long block_num, const format_chunk* format) {
+    // TODO: amplitude based on bit depth
+    float angle = (M_PI * 2 * frequency) / (format->dwSamplesPerSec * format->wChannels);
+    unsigned long total_frames = duration * format->dwSamplesPerSec;
+    unsigned long index;
+    sample iterated_sample;
+    for(index = 0; index < total_frames; index++)
+    {
+        //printf("sample %d", index);
+        iterated_sample.value = (short)(amplitude * sin(angle*(index+(block_num*BLOCK_SIZE))));
+        WriteToFrame(&iterated_sample,&dest[index+(block_num*BLOCK_SIZE)],1,format->dwBitsPerSample);
+    }
+}
+
 void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double duration, const unsigned short amplitude, const format_chunk* format) {
     //frequency cycles per second
-    short max_amplitude = 32760/2;
+    short max_amplitude = 32760/8;
     double step_size = ((float)max_amplitude*2 / format->dwSamplesPerSec) * frequency;
     //float angle = (M_PI * 2 * frequency) / (format->dwSamplesPerSec * format->wChannels);
     //unsigned long total_frames = duration * format->dwSamplesPerSec;
@@ -47,9 +64,6 @@ void GenerateSawWave_Mono_16a(frame* dest, const double frequency, const double 
     sample iterated_sample;
     for(index = 0; index < total_frames; index++)
     {
-        if(index == 48) {
-                printf("pause");
-        }
         //iterated_sample.value = ((short)(index * step_size) % max_amplitude) - max_amplitude;
         iterated_sample.value = ((index * (short)step_size) % (max_amplitude*2)) - max_amplitude;
         WriteToFrame(&iterated_sample,&dest[index],1,format->dwBitsPerSample);

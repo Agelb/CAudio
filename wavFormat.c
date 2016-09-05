@@ -69,6 +69,7 @@ void InitializeWaveFile(wavFile* wFile){
 void WriteFile(wavFile* wFile) {
     // TODO: error handling in file write
     int frame_index;
+    short iterated_value;
     unsigned int bytes_per_frame = (wFile->fChunk.dwBitsPerSample / 8) * wFile->fChunk.wChannels;
     unsigned long total_frames = wFile->dChunk.header.dwChunkSize / bytes_per_frame;
     unsigned int channel_index;
@@ -81,7 +82,8 @@ void WriteFile(wavFile* wFile) {
     for(frame_index = 0; frame_index < total_frames - 1; frame_index++) {
         if(wFile->fChunk.dwBitsPerSample == 16) {
             for(channel_index = 0; channel_index < wFile->fChunk.wChannels; channel_index++){
-                fwrite(&wFile->dChunk.frames[frame_index].samples[channel_index], sizeof(sample), 1, file_stream);
+                clip_16(&iterated_value, wFile->dChunk.frames[frame_index].samples[channel_index].value);
+                fwrite(&iterated_value, sizeof(short), 1, file_stream);
             }
         }
     }
